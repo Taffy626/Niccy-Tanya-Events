@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Niccy Tanya Events | Luxury Wedding Planner & Event Coordinator</title>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&display=swap');
+
+    :root {
+        --bg: #0d0b0c;
+        --surface: #171416;
+        --surface-glass: rgba(23, 20, 22, 0.7);
+        --blush-accent: #e8c4c8;
+        --rose-gold: #c98a90;
+        --gold: #dfb260;
+        --gold-glow: rgba(223, 178, 96, 0.3);
+        --text-light: #f7f3f5;
+        --text-muted: #a3999e;
+        --border-color: rgba(223, 178, 96, 0.2);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+        font-family: 'Montserrat', sans-serif;
+        background-color: var(--bg);
+        color: var(--text-light);
+        line-height: 1.7;
+        overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4, .serif-font {
+        font-family: 'Playfair Display', serif;
+    }
+
+    /* Floating Canvas Sparkles */
+    #sparkle-canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        pointer-events: none;
+        z-index: 1;
+    }
+
+    /* Scroll Reveal Animation Classes */
+    .reveal {
+        opacity: 0;
+        transform: translateY(40px);
+        transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .reveal.active {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    /* Navigation */
+    nav {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        background: rgba(13, 11, 12, 0.85);
+        backdrop-filter: blur(15px);
+        padding: 20px 8vw;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 1000;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .brand {
+        font-family: 'Cinzel', serif;
+        font-size: 1.4rem;
+        letter-spacing: 2px;
+        color: var(--gold);
+        text-decoration: none;
+    }
+
+    .brand span {
+        display: block;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 0.55rem;
+        letter-spacing: 4px;
+        color: var(--blush-accent);
+        text-transform: uppercase;
+    }
+
+    .nav-links { display: flex; gap: 35px; list-style: none; }
+    .nav-links a {
+        text-decoration: none;
+        color: var(--text-light);
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        transition: color 0.3s ease;
+    }
+    .nav-links a:hover { color: var(--gold); }
+
+    /* Hero Section */
+    .hero {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        padding: 120px 8vw 60px;
+        position: relative;
+        z-index: 2;
+    }
+
+    .hero-grid {
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 60px;
+        align-items: center;
+    }
+
+    .hero-tag {
+        font-family: 'Cinzel', serif;
+        font-size: 0.85rem;
+        letter-spacing: 3px;
+        color: var(--gold);
+        text-transform: uppercase;
+        margin-bottom: 15px;
+        display: block;
+    }
+
+    .hero h1 {
+        font-size: clamp(2.8rem, 4.5vw, 4.2rem);
+        line-height: 1.15;
+        margin-bottom: 25px;
+    }
+
+    .hero h1 span {
+        background: linear-gradient(135deg, var(--gold) 0%, var(--blush-accent) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-style: italic;
+    }
+
+    .hero p {
+        color: var(--text-muted);
+        font-size: 1.1rem;
+        margin-bottom: 35px;
+        max-width: 520px;
+    }
+
+    .cta-group { display: flex; gap: 20px; align-items: center; }
+
+    .btn-gold {
+        padding: 16px 36px;
+        background: linear-gradient(135deg, var(--gold) 0%, var(--rose-gold) 100%);
+        color: #000;
+        font-weight: 600;
+        text-decoration: none;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-size: 0.8rem;
+        border-radius: 2px;
+        box-shadow: 0 0 20px var(--gold-glow);
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+    }
+
+    .btn-gold:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 30px rgba(223, 178, 96, 0.5);
+    }
+
+    .btn-outline {
+        padding: 15px 32px;
+        border: 1px solid var(--border-color);
+        color: var(--text-light);
+        text-decoration: none;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-size: 0.8rem;
+        transition: all 0.3s ease;
+    }
+
+    .btn-outline:hover {
+        border-color: var(--gold);
+        color: var(--gold);
+    }
+
+    .hero-img-frame {
+        position: relative;
+    }
+
+    .hero-img-frame img {
+        width: 100%;
+        border-radius: 4px;
+        border: 1px solid var(--border-color);
+        box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+        transition: transform 0.5s ease;
+    }
+
+    .hero-img-frame:hover img {
+        transform: scale(1.02);
+    }
+
+    .experience-badge {
+        position: absolute;
+        bottom: -25px;
+        left: -25px;
+        background: var(--surface-glass);
+        backdrop-filter: blur(10px);
+        border: 1px solid var(--border-color);
+        padding: 20px;
+        border-radius: 4px;
+        text-align: center;
+    }
+
+    .experience-badge h3 {
+        font-size: 1.8rem;
+        color: var(--gold);
+    }
+
+    .experience-badge p {
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin: 0;
+        color: var(--text-light);
+    }
+
+    /* Floating Quote Banner */
+    .quote-banner {
+        padding: 60px 8vw;
+        background: var(--surface);
+        border-y: 1px solid var(--border-color);
+        text-align: center;
+        position: relative;
+        z-index: 2;
+    }
+
+    .quote-banner blockquote {
+        font-family: 'Playfair Display', serif;
+        font-style: italic;
+        font-size: clamp(1.4rem, 2.5vw, 2.2rem);
+        color: var(--blush-accent);
+        max-width: 900px;
+        margin: 0 auto;
+    }
+
+    /* About Section */
+    .about {
+        padding: 120px 8vw;
+        display: grid;
+        grid-template-columns: 0.9fr 1.1fr;
+        gap: 70px;
+        align-items: center;
+        position: relative;
+        z-index: 2;
+    }
+
+    .about-gallery {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+
+    .about-gallery img {
+        width: 100%;
+        height: 380px;
+        object-fit: cover;
+        border-radius: 4px;
+        border: 1px solid var(--border-color);
+        transition: filter 0.4s ease, transform 0.4s ease;
+    }
+
+    .about-gallery img:hover {
+        transform: translateY(-5px);
+        filter: brightness(1.1);
+    }
+
+    .section-header { margin-bottom: 25px; }
+    .section-header .tag {
+        font-family: 'Cinzel', serif;
+        color: var(--gold);
+        letter-spacing: 2px;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+    }
+    .section-header h2 {
+        font-size: 2.8rem;
+        line-height: 1.2;
+        margin-top: 5px;
+    }
+
+    /* Services Section */
+    .services {
+        padding: 120px 8vw;
+        background: var(--surface);
+        position: relative;
+        z-index: 2;
+    }
+
+    .services-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 30px;
+        margin-top: 50px;
+    }
+
+    .service-card {
+        background: var(--surface-glass);
+        border: 1px solid var(--border-color);
+        padding: 40px 30px;
+        border-radius: 4px;
+        transition: all 0.4s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .service-card::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%; height: 2px;
+        background: linear-gradient(90deg, transparent, var(--gold), transparent);
+        transform: translateX(-100%);
+        transition: transform 0.6s ease;
+    }
+
+    .service-card:hover::before { transform: translateX(100%); }
+
+    .service-card:hover {
+        transform: translateY(-8px);
+        border-color: var(--gold);
+        box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+    }
+
+    .service-num {
+        font-family: 'Cinzel', serif;
+        font-size: 2rem;
+        color: var(--gold);
+        opacity: 0.6;
+        margin-bottom: 15px;
+    }
+
+    .service-card h3 {
+        font-size: 1.4rem;
+        margin-bottom: 15px;
+        color: var(--text-light);
+    }
+
+    .service-card p {
+        color: var(--text-muted);
+        font-size: 0.95rem;
+    }
+
+    /* Interactive Planner Estimator */
+    .interactive-section {
+        padding: 100px 8vw;
+        background: var(--bg);
+        position: relative;
+        z-index: 2;
+    }
+
+    .calculator-box {
+        background: var(--surface);
+        border: 1px solid var(--border-color);
+        border-radius: 6px;
+        padding: 50px;
+        max-width: 800px;
+        margin: 40px auto 0;
+    }
+
+    .calc-option { margin-bottom: 30px; }
+    .calc-option label {
+        display: block;
+        margin-bottom: 10px;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: var(--blush-accent);
+    }
+
+    select, input[type="range"] {
+        width: 100%;
+        padding: 14px;
+        background: var(--bg);
+        border: 1px solid var(--border-color);
+        color: var(--text-light);
+        border-radius: 4px;
+        font-family: 'Montserrat', sans-serif;
+        outline: none;
+    }
+
+    .calc-result {
+        text-align: center;
+        padding: 25px;
+        background: rgba(223, 178, 96, 0.05);
+        border: 1px dashed var(--gold);
+        margin-top: 30px;
+        border-radius: 4px;
+    }
+
+    .calc-result h4 {
+        font-size: 1.2rem;
+        color: var(--text-light);
+    }
+
+    .calc-result .tier {
+        font-size: 1.8rem;
+        color: var(--gold);
+        margin-top: 5px;
+    }
+
+    /* FAQ Section Accordion */
+    .faq-section {
+        padding: 100px 8vw;
+        background: var(--surface);
+        position: relative;
+        z-index: 2;
+    }
+
+    .accordion { max-width: 800px; margin: 40px auto 0; }
+    .accordion-item {
+        border-bottom: 1px solid var(--border-color);
+        margin-bottom: 15px;
+    }
+
+    .accordion-header {
+        width: 100%;
+        text-align: left;
+        background: none;
+        border: none;
+        padding: 20px 0;
+        color: var(--text-light);
+        font-family: 'Playfair Display', serif;
+        font-size: 1.2rem;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .accordion-header::after {
+        content: '+';
+        font-size: 1.5rem;
+        color: var(--gold);
+    }
+
+    .accordion-header.active::after { content: '−'; }
+
+    .accordion-body {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.4s ease;
+        color: var(--text-muted);
+        font-size: 0.95rem;
+        padding-bottom: 0;
+    }
+
+    .accordion-body p { padding-bottom: 20px; }
+
+    /* Footer / Contact */
+    footer {
+        padding: 100px 8vw 40px;
+        background: #080707;
+        border-top: 1px solid var(--border-color);
+        position: relative;
+        z-index: 2;
+    }
+
+    .footer-grid {
+        display: grid;
+        grid-template-columns: 1.5fr 1fr 1fr;
+        gap: 50px;
+        margin-bottom: 80px;
+    }
+
+    .footer-col h3 {
+        font-size: 1.6rem;
+        color: var(--gold);
+        margin-bottom: 20px;
+    }
+
+    .footer-col p { color: var(--text-muted); margin-bottom: 15px; }
+
+    .contact-list { list-style: none; }
+    .contact-list li {
+        margin-bottom: 15px;
+        color: var(--text-light);
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .copyright {
+        text-align: center;
+        color: var(--text-muted);
+        font-size: 0.8rem;
+        padding-top: 30px;
+        border-top: 1px solid rgba(255,255,255,0.05);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 900px) {
+        .hero-grid, .about, .footer-grid { grid-template-columns: 1fr; }
+        .nav-links { display: none; }
+        .hero h1 { font-size: 3rem; }
+    }
+</style>
+</head>
+<body>
+
+    <!-- Subtle Floating Canvas Animation -->
+    <canvas id="sparkle-canvas"></canvas>
+
+    <!-- Navigation -->
+    <nav>
+        <a href="#" class="brand">
+            Niccy Tanya
+            <span>Events</span>
+        </a>
+        <ul class="nav-links">
+            <li><a href="#about">About</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#estimate">Planner Guide</a></li>
+            <li><a href="#faq">FAQ</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-grid">
+            <div class="hero-text reveal">
+                <span class="hero-tag">Luxury Wedding & Event Planner</span>
+                <h1>You dream it.<br><span>I plan it perfectly.</span></h1>
+                <p>Creating beautiful, stress-free, and unforgettable experiences you and your guests will cherish forever. ♡</p>
+                <div class="cta-group">
+                    <a href="#contact" class="btn-gold">Book Consultation</a>
+                    <a href="#services" class="btn-outline">Explore Services</a>
+                </div>
+            </div>
+            <div class="hero-img-frame reveal">
+                <img src="IMG-20260831-WA0019.jpg" alt="Niccy Tanya Event Coordinator">
+                <div class="experience-badge">
+                    <h3>5★</h3>
+                    <p>Bespoke Planning</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Statement Quote Banner -->
+    <section class="quote-banner reveal">
+        <blockquote>"I don't just plan events, I create memories that last a lifetime."</blockquote>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="about-gallery reveal">
+            <img src="IMG-20260831-WA0017.jpg" alt="Niccy Tanya Portrait">
+            <img src="IMG-20260831-WA0018.jpg" alt="Niccy Tanya Styling">
+        </div>
+        <div class="about-content reveal">
+            <div class="section-header">
+                <span class="tag">Behind The Craft</span>
+                <h2>Planning with Passion. Celebrating with Style.</h2>
+            </div>
+            <p>Welcome to Niccy Tanya Events. We specialize in curating high-end weddings, corporate galas, and private celebrations tailored precisely to your story.</p>
+            <p>Whether you need comprehensive full-suite wedding planning from day one or seamless day-of coordination to ensure your itinerary executes flawlessly, we handle every detail with sophistication and grace.</p>
+            <div style="margin-top: 25px; padding-left: 20px; border-left: 2px solid var(--gold);">
+                <p style="font-style: italic; color: var(--blush-accent);">"Let me handle the details, you enjoy every moment." ♡</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="services">
+        <div class="section-header reveal" style="text-align: center;">
+            <span class="tag">Tailored Packages</span>
+            <h2>What I Offer</h2>
+        </div>
+        <div class="services-grid">
+            <div class="service-card reveal">
+                <div class="service-num">01</div>
+                <h3>Wedding Planning</h3>
+                <p>Complete end-to-end design, venue sourcing, timeline creation, and full coordination for your dream wedding day.</p>
+            </div>
+            <div class="service-card reveal">
+                <div class="service-num">02</div>
+                <h3>Event Coordination</h3>
+                <p>Seamless execution for milestone celebrations, galas, and anniversary parties tailored to your exact aesthetic.</p>
+            </div>
+            <div class="service-card reveal">
+                <div class="service-num">03</div>
+                <h3>Decor & Styling</h3>
+                <p>Transforming blank venues into breathtaking atmospheres with custom color palettes, florals, and tablescapes.</p>
+            </div>
+            <div class="service-card reveal">
+                <div class="service-num">04</div>
+                <h3>Vendor Management</h3>
+                <p>Curating top-tier caterers, photographers, and entertainers while managing contracts and communications.</p>
+            </div>
+            <div class="service-card reveal">
+                <div class="service-num">05</div>
+                <h3>Budget Planning</h3>
+                <p>Strategic financial allocation to ensure maximum luxury, elegance, and impact without unexpected surprises.</p>
+            </div>
+            <div class="service-card reveal">
+                <div class="service-num">06</div>
+                <h3>Day-Of Coordination</h3>
+                <p>On-site management during your big day so you and your family can relax and soak in every memory.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Experience Section -->
+    <section id="estimate" class="interactive-section">
+        <div class="section-header reveal" style="text-align: center;">
+            <span class="tag">Interactive Planner</span>
+            <h2>Find Your Recommended Service Scope</h2>
+        </div>
+        <div class="calculator-box reveal">
+            <div class="calc-option">
+                <label>Select Event Type</label>
+                <select id="event-type" onchange="calculateScope()">
+                    <option value="wedding">Full Destination / Luxury Wedding</option>
+                    <option value="coordination">Day-Of Coordination / Intimate Wedding</option>
+                    <option value="party">Private Gala / Anniversary Event</option>
+                </select>
+            </div>
+            <div class="calc-option">
+                <label>Estimated Guest Count: <span id="guest-count-val" style="color:var(--gold)">150</span></label>
+                <input type="range" id="guest-range" min="30" max="500" value="150" oninput="calculateScope()">
+            </div>
+            <div class="calc-result">
+                <h4>Recommended Planning Experience:</h4>
+                <div class="tier" id="recommended-tier">Full Concept & Production Suite</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Accordion -->
+    <section id="faq" class="faq-section">
+        <div class="section-header reveal" style="text-align: center;">
+            <span class="tag">Common Questions</span>
+            <h2>Frequently Asked</h2>
+        </div>
+        <div class="accordion reveal">
+            <div class="accordion-item">
+                <button class="accordion-header">Where are your services located?</button>
+                <div class="accordion-body">
+                    <p>We are based in Zimbabwe and available for travel worldwide for destination weddings and luxury private events.</p>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <button class="accordion-header">How far in advance should we book?</button>
+                <div class="accordion-body">
+                    <p>For full wedding planning, we recommend booking 6 to 12 months in advance. For day-of coordination, 2 to 4 months prior is ideal.</p>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <button class="accordion-header">Do you handle vendor communications?</button>
+                <div class="accordion-body">
+                    <p>Yes! We liaise with all vendors, confirm arrival times, manage contracts, and oversee setup on the day of the event.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer / Contact -->
+    <footer id="contact">
+        <div class="footer-grid reveal">
+            <div class="footer-col">
+                <h3>Niccy Tanya Events</h3>
+                <p>Let's turn your vision into the perfect celebration. Get in touch today to schedule your private consultation.</p>
+                <p style="color: var(--gold); font-size: 0.9rem;">Based in Zimbabwe • Available for Travel</p>
+            </div>
+            <div class="footer-col">
+                <h4 style="color: var(--blush-accent); margin-bottom: 20px;">Direct Enquiries</h4>
+                <ul class="contact-list">
+                    <li>📞 0786462438</li>
+                    <li>✉️ nicolatanya18@gmail.com</li>
+                    <li>📱 @niccytanya</li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4 style="color: var(--blush-accent); margin-bottom: 20px;">Consultations</h4>
+                <a href="mailto:nicolatanya18@gmail.com" class="btn-gold" style="display:inline-block;">Email Niccy</a>
+            </div>
+        </div>
+        <div class="copyright">
+            © 2026 Niccy Tanya Events. All Rights Reserved.
+        </div>
+    </footer>
+
+    <!-- Interactive Scripts -->
+    <script>
+        // Scroll Reveal Script
+        window.addEventListener('scroll', reveal);
+        function reveal() {
+            var reveals = document.querySelectorAll('.reveal');
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 100;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add('active');
+                }
+            }
+        }
+        reveal(); // Trigger initially
+
+        // Accordion Script
+        const accHeaders = document.querySelectorAll('.accordion-header');
+        accHeaders.forEach(header => {
+            header.addEventListener('click', () => {
+                header.classList.toggle('active');
+                const body = header.nextElementSibling;
+                if (header.classList.contains('active')) {
+                    body.style.maxHeight = body.scrollHeight + "px";
+                } else {
+                    body.style.maxHeight = "0";
+                }
+            });
+        });
+
+        // Interactive Planner Calculator
+        function calculateScope() {
+            const eventType = document.getElementById('event-type').value;
+            const guestCount = document.getElementById('guest-range').value;
+            document.getElementById('guest-count-val').innerText = guestCount;
+            const resTier = document.getElementById('recommended-tier');
+
+            if (eventType === 'wedding' && guestCount > 150) {
+                resTier.innerText = "Full Signature Luxury Suite & Multi-Day Coordination";
+            } else if (eventType === 'wedding') {
+                resTier.innerText = "Bespoke Full Wedding Planning & Styling";
+            } else if (eventType === 'coordination') {
+                resTier.innerText = "Essential Day-Of Management & Logistics";
+            } else {
+                resTier.innerText = "Custom Event Design & Vendor Curation";
+            }
+        }
+
+        // Background Golden Particle Animation Canvas
+        const canvas = document.getElementById('sparkle-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2;
+                this.speedX = (Math.random() - 0.5) * 0.3;
+                this.speedY = (Math.random() - 0.5) * 0.3;
+                this.opacity = Math.random() * 0.5;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+            }
+            draw() {
+                ctx.fillStyle = `rgba(223, 178, 96, ${this.opacity})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        for (let i = 0; i < 40; i++) { particles.push(new Particle()); }
+
+        function animateSparkles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => { p.update(); p.draw(); });
+            requestAnimationFrame(animateSparkles);
+        }
+        animateSparkles();
+    </script>
+</body>
+</html>
